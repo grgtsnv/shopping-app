@@ -1,37 +1,119 @@
-# 🛒 Simple Shopping Cart Application
+# 🛒 Мини система за онлайн магазин
 
-Welcome to this **Java console app** that simulates a basic shopping cart system! 🎉  
-Add **Physical** and **Digital** products, review your cart, and get a neat order summary
+## 🎯 Цел на проекта
 
----
+Симулиране на опростена онлайн търговска система, която позволява:
+- Добавяне на продукти (физически и дигитални)
+- Управление на количка (`Cart`)
+- Създаване на поръчки (`Order`)
+- Работа с клиенти (`Customer`)
 
-## 🚀 Features
-
-- Add products by type:
-  - 📦 **Physical Products** (with weight)
-  - 💾 **Digital Products** (with file size)
-- 🛍️ View your shopping cart contents anytime
-- 🧾 Display a final order summary with customer details
+Целта е упражняване на **класове**, **наследяване**, **полиморфизъм**, **инкапсулация** и **взаимодействие между обекти**.
 
 ---
 
-## 🛠️ How to Use
+## 🧱 Основни компоненти (класове)
 
-1. Run the program.
-2. Enter the customer's name 👤
-3. Add products by selecting product type 📚 or 💿
-4. Provide product details (name, price, weight/file size)
-5. Add more products or finish by typing 'N' ❌
-6. Review your cart and order summary 🛒✅
+### 1. `Product` *(абстрактен или базов клас)*
+
+**Полета:**
+- `int id`
+- `String name`
+- `double price`
+- `String description`
+
+**Методи:**
+- `double getPrice()`
+- `String getInfo()`
+- `double calculateShipping()` *(по подразбиране: 0)*
 
 ---
 
-## 🗂️ Project Structure
+### 2. Подкласове на `Product`
 
-- `Main.java` — Main program flow and user interaction 🎛️
-- `Customer.java` — Customer data model 👤
-- `Product.java` — Abstract base product class 🏷️
-- `PhysicalProduct.java` — For physical goods 📦
-- `DigitalProduct.java` — For digital goods 💾
-- `Cart.java` — Shopping cart management 🛒
-- `Order.java` — Order processing and summary 🧾
+#### 📦 `PhysicalProduct`
+**Допълнителни полета:**
+- `double weight`
+- `double shippingCost`
+
+**Override методи:**
+- `calculateShipping()` — базира се на тегло
+
+#### 📥 `DigitalProduct`
+**Допълнителни полета:**
+- `double fileSize`
+- `String downloadLink`
+
+**Override методи:**
+- `calculateShipping()` — винаги 0
+
+---
+
+### 3. `Customer`
+
+**Полета:**
+- `String name`
+- `String email`
+- `String address`
+- `int id`
+- `List<Order> orders`
+
+**Методи:**
+- `makeOrder(Cart cart)`
+- `viewOrders()`
+
+---
+
+### 4. `Cart`
+
+**Полета:**
+- `List<Product> products`
+
+**Методи:**
+- `addProduct(Product product)`
+- `removeProduct(Product product)`
+- `getTotalPrice()`
+- `clearCart()`
+
+---
+
+### 5. `Order`
+
+**Полета:**
+- `int id`
+- `List<Product> products`
+- `double totalPrice`
+- `Date date`
+- `Customer customer`
+
+**Методи:**
+- `printReceipt()`
+
+---
+
+## 🔁 Примерен поток в `Main`
+
+1. Създаване на продукти (физически и дигитални)
+2. Създаване на клиент
+3. Добавяне на продукти в количка
+4. Преглед и финализиране на поръчка
+5. Преглед на всички поръчки от клиента
+
+---
+
+## 🎓 Концепции за упражнение
+
+- **Наследяване:** `DigitalProduct` и `PhysicalProduct` наследяват `Product`
+- **Полиморфизъм:** чрез override на методи като `getInfo()` и `calculateShipping()`
+- **Инкапсулация:** чрез `private` полета и `getters/setters`
+- **Работа с колекции:** `ArrayList<Product>`, `List<Order>`
+- **Създаване и взаимодействие между обекти**
+
+---
+
+## 🧩 Допълнителни идеи (по избор)
+
+- Отстъпки или купони
+- Статус на поръчка: “Pending”, “Shipped”, “Delivered”
+- Генериране на PDF фактура
+- Запазване и зареждане на данни от файл
